@@ -31,9 +31,9 @@
                         </div>
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
-                                <a href="">Página Inicial</a>
+                                <a href="index.html">Página Inicial</a>
                                 <a href="">Cookies</a>
-                                <a href="">Ajuda</a>
+                                <a href="contato.html">Ajuda</a>
                                 <a href="">FAQs</a>
                             </div>
                         </div>

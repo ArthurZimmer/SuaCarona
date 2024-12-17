@@ -8,8 +8,7 @@
         <meta content="" name="keywords">
         <meta content="" name="description">
 
-
-        <!-- Favicon -->
+            <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="57x57" href="img/favicon_carona/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="img/favicon_carona/apple-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="img/favicon_carona/apple-icon-72x72.png">
@@ -61,7 +60,7 @@
         <!-- Spinner End -->
 
        <!-- Navbar Start -->
-       <div class="container-fluid nav-bar bg-transparent">
+    <div class="container-fluid nav-bar bg-transparent">
         <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
             <a href="index.php" class="navbar-brand d-flex align-items-center text-center">
                 <div class="icon p-2 me-2">
@@ -74,27 +73,47 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
-                    <a href="index.php" class="nav-item nav-link ">Início</a>
-                    <a href="sobreLogado.php" class="nav-item nav-link">Sobre nós</a>
-                    <a href="faleconoscologado.html" class="nav-item nav-link active">Fale conosco</a>
-
-                    <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="perfil.html">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="sair.php" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Sair
-                            </a>
-                        </div>
-                    </li>
+                    <a href="index.html" class="nav-item nav-link">Início</a>
+                    <a href="oquenossomos.html" class="nav-item nav-link">Sobre nós</a>
+                    
+                    <div class="nav-item dropdown">
+                   <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="property-list.html" class="dropdown-item">Property List</a>
+                            <a href="property-type.html" class="dropdown-item">Property Type</a>
+                            <a href="property-agent.html" class="dropdown-item">Property Agent</a>
+                        </div> -->
+                    </div>
+                    
+                    <a href="contact.html" class="nav-item nav-link active">Fale conosco</a>
+    
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <!-- Dropdown - User Information <?php echo $foto;?> -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="perfil.html">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Perfil
+                                    </a>
+                            <!--<a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Settings
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Activity Log
+                                    </a>-->
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="sair.php" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Sair
+                                    </a>
+                                </div>
+                            </li>
                 </div>
-                <a href="index.html" class="btn btn-primary px-3 d-none d-lg-flex">Sair</a>
+                <a href="login.php" class="btn btn-primary px-3 d-none d-lg-flex">Entrar</a>
             </div>
-        </nav>
-    </div>   
         </nav>
     </div>
 
@@ -130,7 +149,6 @@
                         <div class="wow fadeInUp" data-wow-delay="0.010s">
                             <div class="p-5 rounded h-100 wow fadeInUp input-contorno-verde" data-wow-delay="0.1s">
                                 <h4 class="text-primary">Envie sua mensagem</h4>
-                                <!-- <p class="mb-4">Preciso ativar a função, (podemos fazer o que o sor ensinou hoje, 22/08/24)<a class="text-primary fw-bold" href="index.html">Link??</a>.</p> -->
                                 <form>
                                     <div class="row g-4">
                                         <div class="col-lg-12 col-xl-6">
@@ -171,9 +189,9 @@
                                 </form>
                             </div>
                             <div class="rounded p-5 mb-5">
-                                <h1 class="text-primary mb-4" style="margin-bottom: 60px;">Podemos te ajudar?</h1>
+                                <h1 class="text-primary mb-4" style="padding: 15px;">Podemos te ajudar?</h1>
                                 <div class="row g-4">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="contact-add-item">
                                             <div class="contact-icon text-primary mb-4">
                                                 <i class="fas fa-map-marker-alt fa-2x"></i>
@@ -184,7 +202,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="contact-add-item">
                                             <div class="contact-icon text-primary mb-4">
                                                 <i class="fas fa-envelope fa-2x"></i>
@@ -195,7 +213,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="contact-add-item">
                                             <div class="contact-icon text-primary mb-4">
                                                 <i class="fa fa-phone-alt fa-2x"></i>

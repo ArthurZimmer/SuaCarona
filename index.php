@@ -1,5 +1,9 @@
 <?php
 include_once "sessao.php";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +15,124 @@ include_once "sessao.php";
     <?php
     include_once "header.php";
     ?>
+
+    <!-- Adicionar CSS personalizado para caronas -->
+    <style>
+        .carona-disponivel {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .carona-disponivel:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background-color: #00B98E;
+        }
+
+        .carona-disponivel:hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        /* Estilos para períodos do calendário de caronas */
+        .card-body > div {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Estilo específico para Manhã */
+        .card-body > div:nth-child(1) {
+            background-color: rgba(0, 185, 142, 0.1); /* Tom suave de verde primário */
+            border-left: 4px solid #00B98E;
+        }
+
+        /* Estilo específico para Tarde */
+        .card-body > div:nth-child(2) {
+            background-color: rgba(255, 105, 34, 0.1); /* Tom suave de laranja secundário */
+            border-left: 4px solid #FF6922;
+        }
+
+        /* Estilo específico para Noite */
+        .card-body > div:nth-child(3) {
+            background-color: rgba(14, 46, 80, 0.1); /* Tom suave de azul escuro */
+            border-left: 4px solid #0E2E50;
+        }
+
+        /* Hover states for periods with more distinct colors */
+        .card-body > div:nth-child(1):hover {
+            background-color: rgba(0, 185, 142, 0.2); /* Enhanced green */
+            border-left-color: #00a876;
+            box-shadow: 0 4px 6px rgba(0, 185, 142, 0.1);
+        }
+
+        .card-body > div:nth-child(2):hover {
+            background-color: rgba(255, 105, 34, 0.2); /* Enhanced orange */
+            border-left-color: #ff4500;
+            box-shadow: 0 4px 6px rgba(255, 105, 34, 0.1);
+        }
+
+        .card-body > div:nth-child(3):hover {
+            background-color: rgba(14, 46, 80, 0.2); /* Enhanced dark blue */
+            border-left-color: #1a5f7a;
+            box-shadow: 0 4px 6px rgba(14, 46, 80, 0.1);
+        }
+
+        /* Título dos períodos com estilo */
+        .card-body h6 {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Botão de adicionar carona com transição suave */
+        .add-carona-btn {
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .add-carona-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .add-carona-btn {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 50%; /* Center vertically */
+            right: 10px; /* Move slightly away from the right edge */
+            transform: translateY(100%); /* Ensure exact vertical centering */
+            margin-right: 20px;
+            padding: 4px 6px;
+            font-size: 0.7rem;
+            border-radius: 50%;
+        }
+
+        .navbar .btn-primary.navbar-exit-btn {
+            transform: translateY(50%);
+            padding-top: 6px;
+            padding-bottom: 6px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -37,783 +159,201 @@ include_once "sessao.php";
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link active">Início</a>
-                        <a href="oquenossomos.html" class="nav-item nav-link">Sobre nós</a>
+                        <a href="index.php" class="nav-item nav-link active">Início</a>
+                        <a href="sobreLogado.php" class="nav-item nav-link">Sobre nós</a>
                         <a href="faleconoscologado.html" class="nav-item nav-link">Fale conosco</a>
-                        <a href="serviço.html" class="nav-item nav-link">Nossos serviços</a>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="perfil.html">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="sair.php" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Sair
-                                </a>
-                            </div>
-                        </li>
-                    </div>
-                    <a href="index.html" class="btn btn-primary px-3 d-none d-lg-flex">Sair</a>
-                </div>
-            </nav>
+                        <a href="#" class="btn btn-primary px-3 d-none d-lg-flex align-items-center navbar-exit-btn" data-bs-toggle="modal" data-bs-target="#sairModal">Sair</a>            </nav>
         </div>
         
         <!-- Navbar End -->
 
-
         <!-- Header Start -->
-        <div class="container-fluid header bg-white p-0">
+        <div class="container-fluid header bg-white p-0" style="margin-top: 50px;">
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                 <div class="col-md-6 p-5 mt-lg-5">
-                    <h1 class="display-3 animated fadeIn mb-4">Qual vai ser a<span class="text-primary"> SuaCarona</span></h1>
-                    <a href="matricula.php" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Me matricular</a>
-                    <!--<p class="animated fadeIn mb-4 pb-2">De aluno para aluno s2 !</p>-->
+                    <h1 class="display-3 animated fadeIn mb-4">Qual vai ser a<span class="text-primary"> SuaCarona</span>?</h1>
+                    <a href="#" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Me matricular</a>
                 </div>
-                <div class="col-md-6 animated fadeIn" style = "height: 700px;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27751.745591241277!2d-51.164140200000006!3d-29.6046107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95194546d6bcc2c7%3A0x44ee55d9e5d4b98e!2sIvoti%2C%20RS%2C%2093900-000!5e0!3m2!1spt-BR!2sbr!4v1724354710349!5m2!1spt-BR!2sbr" width="760" height="690" style="border radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div class="col-md-6 animated fadeIn" style="height: 700px;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27751.745591241277!2d-51.164140200000006!3d-29.6046107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95194546d6bcc2c7%3A0x44ee55d9e5d4b98e!2sIvoti%2C%20RS%2C%2093900-000!5e0!3m2!1spt-BR!2sbr!4v1724354710349!5m2!1spt-BR!2sbr" width="760" height="690" style="border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
         <!-- Header End -->
 
-
-        <!-- Search desabilitado -->
-        <center>      
-        <div class="container mb-5 wow fadeIn"  data-wow-delay="0.1s" style="padding: 25px;margin: 0 15px; background-color: #0e5033; border-radius: 15px;">
-                    <div class="container">
-                        <div class="row g-2">
-                            <div class="col-md-10">
-                                <div class="row g-2">
-                                    <div class="col-md-4">
-                                        <select class="form-select border-0 py-3">
-                                            <option selected>Ivoti</option>
-                                            <option value="1">Dois Irmãos</option>
-                                            <option value="2">Estância Velha</option>
-                                            <option value="3">Presidente Lucena</option>
-                                            <option value="4">Lindolfo Collor</option>
-                                            <option value="5">Ternuslandia</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <select class="form-select border-0 py-3">
-                                            <option selected>Instituto Ivoti</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-primary border-0 w-100 py-3">Definir cidade</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    </center>
-        <!-- Search End -->
-
-
-        <!-- Category Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 750px;">
-                <h1 class="mb-2">Minha rotina</h1>
-                <h4 class="custom-h4">Caronas matriculadas para essa semana:</h4>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <h3>Segunda</h3>
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Manhã</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 200px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Tarde</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Noite</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <h3>Terça</h3>
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Manhã</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 200px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Tarde</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Noite</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <h3>Quarta</h3>
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Manhã</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 200px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Tarde</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Noite</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <h3>Quinta</h3>
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Manhã</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 200px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Tarde</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Noite</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <h3>Sexta</h3>
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Manhã</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 200px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Tarde</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Noite</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <h3>Sábado</h3>
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Manhã</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 200px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Tarde</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                    <a class="cat-item d-block bg-light text-center rounded p-3" href="teste.html" style="height: 250px; width: 300px;">
-                        <div class="rounded p-4">
-                            <div class="icon mb-3">
-                                <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
-                            </div>
-                            <h6>Noite</h6>
-                            <span>123 Properties</span>
-                        </div>
-                    </a>
-                </div>
-                
-            
-            
-            
-                
-            </div>
-        </div>
-    </div>
-        <!-- Category End -->
-
-
-        <!-- Avisos????????? 
+        <!-- Rotina Semanal Start -->
         <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                        <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="img/about.jpg">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="mb-4">#1 Place To Find The Perfect Property</h1>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Aliqu diam amet diam et eos</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Clita duo justo magna dolore erat amet</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
-                    </div>
+            <div class="container" id="rotina-semanal">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 750px;">
+                    <h1 class="mb-2" style = "margin-top: 100px;">Rotina Semanal de Caronas</h1>
+                </div>
+                <div class="row g-4" id="rotinaSemanal">
+                    <?php 
+                    $diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+                    $periodos = ['Manhã', 'Tarde', 'Noite'];
+
+                    foreach ($diasSemana as $dia) {
+                        echo "<div class='col-lg-2 col-sm-6 wow fadeInUp' data-wow-delay='0.1s'>";
+                        echo "<div class='card h-100'>";
+                        echo "<div class='card-header bg-primary text-white text-center'>{$dia}</div>";
+                        echo "<div class='card-body d-flex flex-column'>";
+
+                        foreach ($periodos as $periodo) {
+                            echo "<div class='mb-3'>";
+                            echo "<h6 class='text-center'>{$periodo}</h6>";
+                            
+                            // Container for existing caronas
+                            echo "<div id='caronas-{$dia}-{$periodo}' class='mb-2'>";
+                            echo "</div>";
+                            
+                            // Add carona button
+                            echo "<button 
+                                class='btn btn-outline-primary w-100 add-carona-btn' 
+                                data-bs-toggle='modal' 
+                                data-bs-target='#adicionarCaronaModal'
+                                data-dia='{$dia}' 
+                                data-periodo='{$periodo}'
+                            >
+                                <i class='fa-regular fa-square-plus me-2'></i></button>";
+                            
+                            echo "</div>";
+                        }
+                        
+                        echo "</div>"; // card-body
+                        echo "</div>"; // card
+                        echo "</div>"; // col
+                    }
+                    ?>
                 </div>
             </div>
         </div>
-         About End -->
+        <!-- Rotina Semanal End -->
 
-
-        <!-- Property List Start 
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-0 gx-5 align-items-end">
-                    <div class="col-lg-6">
-                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
-                            <h1 class="mb-3">Property Listing</h1>
-                            <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                        <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                            <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Featured</a>
-                            </li>
-                            <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">For Sell</a>
-                            </li>
-                            <li class="nav-item me-0">
-                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="tab-content">
-                    <div id="tab-1" class="tab-pane fade show p-0 active">
-                        <div class="row g-4">
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-1.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Appartment</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-2.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Villa</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-3.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Office</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-4.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Building</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-5.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Home</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-6.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Shop</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                                <a class="btn btn-primary py-3 px-5" href="">Browse More Property</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-2" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-1.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Appartment</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-2.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Villa</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-3.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Office</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-4.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Building</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-5.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Home</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-6.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Shop</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center">
-                                <a class="btn btn-primary py-3 px-5" href="">Browse More Property</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-3" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-1.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Appartment</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-2.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Villa</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-3.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Office</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-4.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Building</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-5.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Home</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="img/property-6.jpg" alt=""></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Shop</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">$12,345</h5>
-                                        <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center">
-                                <a class="btn btn-primary py-3 px-5" href="">Browse More Property</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-         Property List End -->
-
-
-        
-
-
-      
-
-
-        <!-- Testimonial Start -->
-        <!--
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Comentários De Nossos Clientes!</h1>
-                    <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
-                </div>
-                <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="testimonial-item bg-light rounded p-3">
-                        <div class="bg-white border rounded p-4">
-                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                            <div class="d-flex align-items-center">
-                                <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-1.jpg" style="width: 45px; height: 45px;">
-                                <div class="ps-3">
-                                    <h6 class="fw-bold mb-1">Client Name</h6>
-                                    <small>Profession</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-3">
-                        <div class="bg-white border rounded p-4">
-                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                            <div class="d-flex align-items-center">
-                                <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-2.jpg" style="width: 45px; height: 45px;">
-                                <div class="ps-3">
-                                    <h6 class="fw-bold mb-1">Client Name</h6>
-                                    <small>Profession</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-3">
-                        <div class="bg-white border rounded p-4">
-                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                            <div class="d-flex align-items-center">
-                                <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-3.jpg" style="width: 45px; height: 45px;">
-                                <div class="ps-3">
-                                    <h6 class="fw-bold mb-1">Client Name</h6>
-                                    <small>Profession</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
-        <!-- Testimonial End -->
-        
-
-        <!--Logout modal-->
-       
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <!-- Modal Adicionar Carona -->
+        <div class="modal fade" id="adicionarCaronaModal" tabindex="-1">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Pronto para sair?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+                        <h5 class="modal-title">Adicionar Carona</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="modal-body">Selecione "Sair" abaixo se você estiver pronto para encerrar o programa.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                        <a class="btn btn-primary" href="logout.php">Sair</a>
+                    <div class="modal-body">
+                        <form id="formAdicionarCarona">
+                            <input type="hidden" id="diaSelecionado" name="dia">
+                            <input type="hidden" id="periodoSelecionado" name="periodo">
+                            
+                            <div class="mb-3">
+                                <label>Local de Partida</label>
+                                <select class="form-select" name="cidade" required>
+                                    <option value="Ivoti">Ivoti</option>
+                                    <option value="Dois Irmãos">Dois Irmãos</option>
+                                    <option value="Estância Velha">Estância Velha</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Hora</label>
+                                <input type="time" class="form-control" name="hora" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Cadastrar Carona</button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
 
+        <!-- Modal Detalhes Carona -->
+        <div class="modal fade" id="detalhesCaronaModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detalhes da Carona</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="detalhesCaronaCorpo">
+                        <!-- Conteúdo dinâmico será inserido aqui -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Editar Carona -->
+        <div class="modal fade" id="editarCaronaModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Carona</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formEditarCarona">
+                            <input type="hidden" name="caronaId">
+                            
+                            <div class="mb-3">
+                                <label>Dia</label>
+                                <select class="form-select" name="dia" required>
+                                    <option value="Segunda">Segunda</option>
+                                    <option value="Terça">Terça</option>
+                                    <option value="Quarta">Quarta</option>
+                                    <option value="Quinta">Quinta</option>
+                                    <option value="Sexta">Sexta</option>
+                                    <option value="Sábado">Sábado</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Período</label>
+                                <select class="form-select" name="periodo" required>
+                                    <option value="Manhã">Manhã</option>
+                                    <option value="Tarde">Tarde</option>
+                                    <option value="Noite">Noite</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Local de Partida</label>
+                                <select class="form-select" name="cidade" required>
+                                    <option value="Ivoti">Ivoti</option>
+                                    <option value="Dois Irmãos">Dois Irmãos</option>
+                                    <option value="Estância Velha">Estância Velha</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Hora</label>
+                                <input type="time" class="form-control" name="hora" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Atualizar Carona</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Confirmar Saída -->
+        <div class="modal fade" id="sairModal" tabindex="-1" style="z-index: 10000;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar Saída</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        Tem certeza que deseja sair da sua conta?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="logout.php" class="btn btn-primary">Confirmar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Footer Start -->
         <?php 
             include_once "footer.php";
         ?>
         <!-- Footer End -->
-
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -830,6 +370,400 @@ include_once "sessao.php";
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+    <!-- Custom Carona Script -->
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const matricularButton = document.querySelector(".btn-primary[href='#']");
+            matricularButton.addEventListener("click", function (event) {
+                event.preventDefault(); // Evita comportamento padrão do link
+                const target = document.getElementById("rotina-semanal");
+                if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                }
+            });
+        });
+
+        function configurarNotificacoesPeriodicas() {
+            // Verificar solicitações a cada 30 segundos
+            setInterval(verificarSolicitacoesPendentes, 500);
+        }
+
+        function verificarSolicitacoesPendentes() {
+            fetch('buscar_solicitacoes_pendentes.php')
+            .then(response => response.json())
+            .then(solicitacoes => {
+                // Remove existing badges
+                document.querySelectorAll('.notification-badge').forEach(badge => badge.remove());
+
+                solicitacoes.forEach(solicitacao => {
+                    const container = document.getElementById(`caronas-${solicitacao.DIA}-${solicitacao.PERIODO}`);
+                    if (container) {
+                        const caronaButtons = container.querySelectorAll('.carona-disponivel');
+                        
+                        caronaButtons.forEach(button => {
+                            // Check if this button belongs to the user with pending solicitations
+                            if (button.getAttribute('data-carona-usuario-id') == solicitacao.idUSUARIO) {
+                                const badge = document.createElement('span');
+                                badge.classList.add('notification-badge', 'badge', 'bg-danger', 'position-absolute', 'top-0', 'end-0');
+                                badge.textContent = solicitacao.TOTAL_SOLICITACOES;
+                                
+                                // Ensure button has relative positioning
+                                button.style.position = 'relative';
+                                button.appendChild(badge);
+                            }
+                        });
+                    }
+                });
+            })
+            .catch(error => console.error('Erro ao verificar solicitações:', error));
+        }
+
+        function carregarCaronas() {
+            fetch('buscar_caronas.php')
+            .then(response => response.json())
+            .then(caronas => {
+                const diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+                const periodos = ['Manhã', 'Tarde', 'Noite'];
+
+                // Limpar caronas existentes
+                diasSemana.forEach(dia => {
+                    periodos.forEach(periodo => {
+                        const container = document.getElementById(`caronas-${dia}-${periodo}`);
+                        container.innerHTML = '';
+                    });
+                });
+
+                // Popular caronas
+                caronas.forEach(carona => {
+                    const container = document.getElementById(`caronas-${carona.DIA}-${carona.PERIODO}`);
+                    if (container) {
+                        const caronaEl = document.createElement('button');
+                        caronaEl.classList.add(
+                            'btn', 
+                            'btn-outline-success', 
+                            'w-100', 
+                            'mb-2', 
+                            'carona-disponivel'
+                        );
+                        caronaEl.innerHTML = `
+                            <span class="d-block fw-bold">${carona.NOME}</span>
+                            <small class="text-muted">${carona.HORA}</small>
+                        `;
+                        caronaEl.setAttribute('data-carona-id', carona.idCARONA);
+                        caronaEl.setAttribute('data-carona-usuario-id', carona.idUSUARIO);
+                        caronaEl.addEventListener('click', () => mostrarDetalhesCarona(carona));
+                        container.appendChild(caronaEl);
+                    }
+                });
+            });
+            verificarSolicitacoesPendentes();
+        }
+
+    // Adicione estas funções ao seu script
+    function aprovarSolicitacao(solicitacaoId) {
+            fetch('aprovar_solicitacao.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `solicitacaoId=${solicitacaoId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Solicitação aprovada com sucesso!');
+                    window.location.href = 'index.php';
+                    // Recarregar detalhes da carona
+                    carregarCaronas();
+                } else {
+                    alert('Erro: ' + data.message);
+                }
+            });
+            verificarSolicitacoesPendentes()
+        }
+
+        function rejeitarSolicitacao(solicitacaoId) {
+            fetch('rejeitar_solicitacao.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `solicitacaoId=${solicitacaoId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Solicitação rejeitada com sucesso!');
+                    window.location.href = 'index.php';
+
+                    // Recarregar detalhes da carona
+                    carregarCaronas();
+                } else {
+                    alert('Erro: ' + data.message);
+                }
+            });
+            verificarSolicitacoesPendentes()
+        }
+
+    function solicitarCarona(caronaId) {
+            console.log('Solicitando carona:', caronaId); 
+            fetch('solicitar_carona.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `caronaId=${caronaId}`
+            })
+            .then(response => {
+                // Log do status da resposta
+                console.log('Status da resposta:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Dados recebidos:', data);
+                if (data.success) {
+                    alert('Solicitação de carona enviada com sucesso!');
+                } else {
+                    alert('Erro: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro na solicitação:', error);
+                alert('Erro ao solicitar carona. Verifique o console.');
+            });
+        }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        carregarCaronas();
+        configurarNotificacoesPeriodicas();
+        // Capturar clique no botão de adicionar carona
+        document.querySelectorAll('.add-carona-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Apenas processa o evento se for o botão de adicionar (+)
+                if (e.currentTarget.classList.contains('add-carona-btn')) {
+                    const dia = this.getAttribute('data-dia');
+                    const periodo = this.getAttribute('data-periodo');
+                    
+                    document.getElementById('diaSelecionado').value = dia;
+                    document.getElementById('periodoSelecionado').value = periodo;
+                }
+            });
+        });
+
+        // Submissão do formulário de carona
+        document.getElementById('formAdicionarCarona').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            fetch('cadastrar_carona.php', {
+                method: 'POST',
+                body: new FormData(this)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Carona cadastrada com sucesso!');
+                    carregarCaronas();
+                    // Fechar o modal de adicionar carona
+                    var addCaronaModal = bootstrap.Modal.getInstance(document.getElementById('adicionarCaronaModal'));
+                    if (addCaronaModal) {
+                        addCaronaModal.hide();
+                    }
+                } else {
+                    alert('Erro ao cadastrar carona: ' + data.message);
+                }
+            });
+        });
+
+        // Carregar caronas ao iniciar
+        carregarCaronas();
+
+        function carregarCaronas() {
+            fetch('buscar_caronas.php')
+            .then(response => response.json())
+            .then(caronas => {
+                const diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+                const periodos = ['Manhã', 'Tarde', 'Noite'];
+
+                // Limpar caronas existentes
+                diasSemana.forEach(dia => {
+                    periodos.forEach(periodo => {
+                        const container = document.getElementById(`caronas-${dia}-${periodo}`);
+                        container.innerHTML = '';
+                    });
+                });
+                // Popular caronas
+                caronas.forEach(carona => {
+                    const container = document.getElementById(`caronas-${carona.DIA}-${carona.PERIODO}`);
+                    if (container) {
+                        const caronaEl = document.createElement('button');
+                        caronaEl.classList.add(
+                            'btn', 
+                            'btn-outline-success', 
+                            'w-100', 
+                            'mb-2', 
+                            'carona-disponivel'
+                        );
+                        caronaEl.innerHTML = `
+                            <span class="d-block fw-bold">${carona.NOME}</span>
+                            <small class="text-muted">${carona.HORA}</small>
+                        `;
+                        caronaEl.setAttribute('data-carona-id', carona.idCARONA);
+                        caronaEl.setAttribute('data-carona-usuario-id', carona.idUSUARIO);
+                        caronaEl.addEventListener('click', () => mostrarDetalhesCarona(carona));
+                        container.appendChild(caronaEl);
+                    }
+                });
+            });
+            verificarSolicitacoesPendentes()
+        }
+
+        function mostrarDetalhesCarona(carona) {
+            // Fetch current user ID
+            fetch('get_current_user_id.php')
+            .then(response => response.json())
+            .then(userData => {
+                // Buscar solicitações para esta carona
+                fetch(`buscar_solicitacoes_carona.php?caronaId=${carona.idCARONA}`)
+                .then(response => response.json())
+                .then(solicitacoes => {
+                    const modal = new bootstrap.Modal(document.getElementById('detalhesCaronaModal'));
+                    const corpo = document.getElementById('detalhesCaronaCorpo');
+                    
+                    // Determine if the current user is the carona owner
+                    const isOwner = userData.id === carona.idUSUARIO;
+                    
+                    // Create modal content based on ownership
+                    let modalContent = `
+                        <p><strong>Motorista:</strong> ${carona.NOME}</p>
+                        <p><strong>Dia:</strong> ${carona.DIA}</p>
+                        <p><strong>Período:</strong> ${carona.PERIODO}</p>
+                        <p><strong>Hora:</strong> ${carona.HORA}</p>
+                        <p><strong>Cidade:</strong> ${carona.CIDADE}</p>
+                    `;
+
+                    // Adicionar solicitações se existirem e o usuário for o dono
+                    if (isOwner && solicitacoes.length > 0) {
+                        modalContent += `<h6>Solicitações de Carona</h6>`;
+                        solicitacoes.forEach(solicitacao => {
+                            modalContent += `
+                                <div class="alert alert-info d-flex justify-content-between align-items-center">
+                                    ${solicitacao.NOME} ${solicitacao.SOBRENOME}
+                                    <div>
+                                        <button class="btn btn-success btn-sm me-2" onclick="aprovarSolicitacao(${solicitacao.idSOLICITACAO})">Aprovar</button>
+                                        <button class="btn btn-danger btn-sm" onclick="rejeitarSolicitacao(${solicitacao.idSOLICITACAO})">Rejeitar</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    // Add buttons based on ownership
+                    if (isOwner) {
+                        modalContent += `
+                            <div class="d-flex justify-content-between mt-3">
+                                <button class="btn btn-success me-2" onclick="editarCarona(${carona.idCARONA})">Editar Carona</button>
+                                <button class="btn btn-danger" onclick="excluirCarona(${carona.idCARONA})">Excluir Carona</button>
+                            </div>
+                        `;
+                    } else {
+                        modalContent += `
+                            <button class="btn btn-primary mt-3" onclick="solicitarCarona(${carona.idCARONA})">Solicitar Carona</button>
+                        `;
+                    }
+
+                    corpo.innerHTML = modalContent;
+                    modal.show();
+                });
+            });
+        }
+
+        // Função para editar carona (abrirá um modal de edição)
+        window.editarCarona = function(caronaId) {
+            fetch(`buscar_carona.php?id=${caronaId}`)
+            .then(response => response.json())
+            .then(carona => {
+                // Criar modal de edição
+                const editModal = new bootstrap.Modal(document.getElementById('editarCaronaModal'));
+                const editForm = document.getElementById('formEditarCarona');
+                
+                // Preencher formulário com dados atuais
+                editForm.querySelector('input[name="caronaId"]').value = caronaId;
+                editForm.querySelector('select[name="dia"]').value = carona.DIA;
+                editForm.querySelector('select[name="periodo"]').value = carona.PERIODO;
+                editForm.querySelector('select[name="cidade"]').value = carona.CIDADE;
+                editForm.querySelector('input[name="hora"]').value = carona.HORA;
+
+                // Fechar o modal de detalhes
+                const detalhesModal = bootstrap.Modal.getInstance(document.getElementById('detalhesCaronaModal'));
+                if (detalhesModal) {
+                    detalhesModal.hide();
+                }
+
+                // Mostrar modal de edição
+                editModal.show();
+            });
+        }
+
+        // Função para excluir carona
+        window.excluirCarona = function(caronaId) {
+            if (confirm('Tem certeza que deseja excluir esta carona?')) {
+                fetch('excluir_carona.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `caronaId=${caronaId}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Carona excluída com sucesso!');
+                        carregarCaronas();
+                        // Fechar o modal de detalhes
+                        const detalhesModal = bootstrap.Modal.getInstance(document.getElementById('detalhesCaronaModal'));
+                        if (detalhesModal) {
+                            detalhesModal.hide();
+                        }
+                    } else {
+                        alert('Erro ao excluir carona: ' + data.message);
+                    }
+                });
+            }
+        }
+
+        
+
+    });
+
+    // Add this to your existing script in index.php
+    document.getElementById('formEditarCarona').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch('atualizar_carona.php', {
+            method: 'POST',
+            body: new FormData(this)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                alert('Carona atualizada com sucesso!');
+                window.location.href = 'index.php';
+                
+                // Recarrega as caronas imediatamente
+                carregarCaronas();
+                
+                // Fechar o modal de edição
+                var editCaronaModal = bootstrap.Modal.getInstance(document.getElementById('editarCaronaModal'));
+                if (editCaronaModal) {
+                    editCaronaModal.hide();
+                }
+            } else {
+                alert('Erro ao atualizar carona: ' + data.message);
+            }
+        });
+    });
+    </script>
 
     <?php
     mysqli_close($conn);

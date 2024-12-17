@@ -6,14 +6,13 @@
 	$cpf = $_POST['cpf'];
 	$email = $_POST['email'];
 	$matricula = $_POST['matricula'];
-	$statusCarona = $_POST['carona'];
 	$senha = $_POST['password'];
 	$reseta = $_POST['confirm-password'];
 
 	
 	if ($senha == $reseta) {
-		$sql = "insert into usuarios (NOME, SOBRENOME, CPF, dsEMAIL, matriculaALUNO, statusCARONA, dsSenha, dsConfirmarSenha) ".
-				"values ('$nome', '$sobrenome', '$cpf', '$email', '$matricula', '$statusCarona', '$senha', '$reseta')";
+		$sql = "insert into usuarios (NOME, SOBRENOME, CPF, dsEMAIL, matriculaALUNO, dsSenha, dsConfirmarSenha) ".
+				"values ('$nome', '$sobrenome', '$cpf', '$email', '$matricula', '$senha', '$reseta')";
 		$result = mysqli_query($conn, $sql);
 		
 		mysqli_close($conn);

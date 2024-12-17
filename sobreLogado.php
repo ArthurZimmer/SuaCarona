@@ -72,44 +72,25 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
-                    <a href="index.html" class="nav-item nav-link">Início</a>
+                    <a href="index.php" class="nav-item nav-link ">Início</a>
                     <a href="oquenossomos.html" class="nav-item nav-link active">Sobre nós</a>
-                    
-                    <div class="nav-item dropdown">
-                   <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
-                        <div class="dropdown-menu rounded-0 m-0">
-                            <a href="property-list.html" class="dropdown-item">Property List</a>
-                            <a href="property-type.html" class="dropdown-item">Property Type</a>
-                            <a href="property-agent.html" class="dropdown-item">Property Agent</a>
-                        </div> -->
-                    </div>
-                    
-                    <a href="contact.html" class="nav-item nav-link">Fale conosco</a>
-    
-                            <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown no-arrow">
-                                <!-- Dropdown - User Information <?php echo $foto;?> -->
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                    aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="perfil.html">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Perfil
-                                    </a>
-    <!--                                <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Activity Log
-                                    </a>-->
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="sair.php" data-toggle="modal" data-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Sair
-                                    </a>
-                                </div>
-                            </li>
+                    <a href="faleconoscologado.html" class="nav-item nav-link ">Fale conosco</a>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="perfil.html">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="sair.php" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Sair
+                            </a>
+                        </div>
+                    </li>
+                </div>
+                <a href="index.html" class="btn btn-primary px-3 d-none d-lg-flex">Sair</a>
+            </div>
                 </div>
                 <a href="login.php" class="btn btn-primary px-3 d-none d-lg-flex">Entrar</a>
             </div>
@@ -296,7 +277,7 @@
                         <h5 class="text-white mb-4">Entre em contato</h5>
                         <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Rua SuaCarona, 145, Bom Jardim, Ivoti</p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+55 051 985520217</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>SuaCarona@Gmail.com</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>suacarona@gmail.com</p>
                         <div class="d-flex pt-2">
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>

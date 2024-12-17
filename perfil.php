@@ -1,6 +1,9 @@
+<?php 
+    include_once "sessao.php";
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
-
 
 <head>
     <title>Início - SuaCarona</title>
@@ -11,23 +14,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="img/favicon_carona/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="img/favicon_carona/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="img/favicon_carona/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="img/favicon_carona/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="img/favicon_carona/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="img/favicon_carona/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="img/favicon_carona/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="img/favicon_carona/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon_carona/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="img/favicon_carona/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon_carona/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon_carona/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon_carona/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,8 +61,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="index.html" class="nav-item nav-link active">Início</a>
-                        <a href="oquenossomos.html" class="nav-item nav-link">Sobre nós</a>
-                        
+                        <a href="oquenossomos.html" class="nav-item nav-link">O que nós somos</a>
                         <div class="nav-item dropdown">
                        <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -84,16 +70,14 @@
                                 <a href="property-agent.html" class="dropdown-item">Property Agent</a>
                             </div> -->
                         </div>
-                        
                         <a href="contact.html" class="nav-item nav-link">Ajuda</a>
-                        <a href="serviço.html" class="nav-item nav-link">Nossos serviços</a>
         
                                 <!-- Nav Item - User Information -->
                                 <li class="nav-item dropdown no-arrow">
                                     <!-- Dropdown - User Information <?php echo $foto;?> -->
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="perfil.html">
+                                        <a class="dropdown-item" href="perfil.php">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Perfil
                                         </a>
@@ -123,23 +107,105 @@
 
         <!-- Header Start -->
         <div class="container-fluid header bg-white p-0">
-            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
-                <div class="col-md-6 p-5 mt-lg-5">
-                    <h1 class="display-5 animated fadeIn mb-4">Seja bem vindo, a<span class="text-primary"> SuaCarona</span> te espera!</h1>
-                    <!--<p class="animated fadeIn mb-4 pb-2">De aluno para aluno s2 !</p>-->
-                    <a href="" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Começar</a>
-                </div>
-                <div class="col-md-6 animated fadeIn">
-                    <div class="owl-carousel header-carousel">
-                        <div class="owl-carousel-item">
-                            <img class="img-fluid" src="img/carrossel-2.svg" alt="">
-                        </div>
-                        <div class="owl-carousel-item">
-                            <img class="img-fluid" src="img/carrossel-1.svg" alt="">
-                        </div>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4" style="margin-left: 14rem; margin-top: 10rem;">
+                        <h1 class="h2 mb-0 text-gray-800">Perfil de usuário</h1>
                     </div>
-                </div>
-            </div>
+
+                    <?php
+                    // totalizadores
+					$id = $_SESSION['id'];
+					$sql = "SELECT * FROM usuarios WHERE idUSUARIO=$id";
+					$result = mysqli_query($conn, $sql);
+					while ($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+						$nome = $row[1];
+						$email = $row[2];
+						$senha = $row[3];
+					}
+					?>
+
+                    <!-- Content Row -->
+                    <div class="row" style="margin-left: 13rem;">
+                        <div class="col-xl-3 col-lg-5">
+                            <div class="card shadow mb-4">
+
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Perfil</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#fotoModal">
+										<!--<img src="<" alt="Admin" class="rounded-circle" width="150">-->
+										</a>
+                                        <div class="mt-3">
+                                            <h4><?php echo $nome;?></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Informações</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <form class="user" action="perfil_alterar.php" method="post">
+                                    <div class="row" style="margin-top: 1.6rem;">
+                                        <input type="text" class="form-control form-control-user" 
+											id="nome" name="nome" value="<?php echo $nome;?>" 
+											placeholder="Nome do usuário">
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                        
+                                        <input type="email" class="form-control form-control-user" 
+											id="email" name="email" value="<?php echo $email;?>" 
+											placeholder="E-mail" required>
+
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                        <input type="password" class="form-control form-control-user"
+											id="senha" name="senha" value="<?php echo $senha;?>" 
+											placeholder="Senha" required>
+                                        </div>
+                                        <hr>
+                                        
+                                        <div class="form-group row">
+                                            <input type="hidden" name="codigo" value="<?php echo $id;?>">
+                                            <button type="submit" class="btn btn-info btn-user">
+                                                <b>Salvar</b>
+                                            </button>
+                                            &nbsp;&nbsp;
+                                            <a href="index.php" class="btn btn-secondary btn-user">
+										        <b>Voltar</b>
+									        </a>
+								        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pie Chart -->
+                    </div>
         </div>
         <!-- Header End -->
       
@@ -208,6 +274,11 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <?php
+    mysqli_close($conn);
+    ?>
+    
 </body>
 
 </html>
